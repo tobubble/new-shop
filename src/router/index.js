@@ -2,7 +2,17 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 const Login = () => import('views/login/Login')
+
 const Home = () => import('views/home/Home')
+const CharacterList = () => import("views/home/views/CharacterList")
+const ClassifyList = () => import("views/home/views/ClassifyList")
+const DataReport = () => import("views/home/views/DataReport")
+const ItemClassify = () => import("views/home/views/ItemClassify")
+const ItemList = () => import("views/home/views/ItemList")
+const OrderList = () => import("views/home/views/OrderList")
+const RootList = () => import("views/home/views/RootList")
+const UserList = () => import("views/home/views/UserList")
+const Welcome = () => import("views/home/views/Welcome")
 
 Vue.use(VueRouter)
 
@@ -17,9 +27,26 @@ const routes = [
   },
   {
     path: '/home',
-    component: Home
+    component: Home,
+    children: [
+      {path: '', redirect: "/welcome"},
+      {path: "/welcome", component: Welcome},
+      {path: "/characterList", component: CharacterList},
+      {path: "/classifyList", component: ClassifyList},
+      {path: "/dataReport", component: DataReport},
+      {path: "/itemClassify", component: ItemClassify},
+      {path: "/itemList", component: ItemList},
+      {path: "/orderList", component: OrderList},
+      {path: "/rootList", component: RootList},
+      {path: "/userList", component: UserList},
+    ]
   }
 ]
+
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 const router = new VueRouter({
   mode: 'history',

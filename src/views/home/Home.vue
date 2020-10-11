@@ -1,22 +1,46 @@
 <template>
-  <div id="home">
-    <el-button type="info" @click="logout">退出</el-button>
-  </div>
+  <el-container id="home">
+    <v-header></v-header>
+    <v-aside :menuData="menuData"> </v-aside>
+  </el-container>
 </template>
 
 <script>
-  export default {
-    name: 'Home',
-    methods: {
-      logout() {
-        window.sessionStorage.clear()
-        this.$router.push("/login")
-        this.$message.success('退出成功')
-      }
-    }
-  }
+import VHeader from "./cpnChildren/VHeader";
+import VAside from "./cpnChildren/VAside";
+
+import { getMenuData } from "network/home/menu";
+
+export default {
+  name: "Home",
+  data() {
+    return {
+      menuData: {},
+    };
+  },
+  components: {
+    VHeader,
+    VAside,
+  },
+  methods: {
+    getInitData() {
+      getMenuData().then((data) => {
+        if (data.status !== 200) return this.$message.error(data.data.meta.msg);
+        this.menuData = data.data;
+        // console.log(this.menuData);
+      });
+    },
+  },
+  created() {
+    this.getInitData();
+  },
+};
 </script>
 
 <style lang='less' scoped>
-
+#home {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 </style>
