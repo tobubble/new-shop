@@ -2,7 +2,7 @@
   <div id="login_container">
     <div class="login_box">
       <div class="avatar">
-        <img src="~assets/logo.png" alt="">
+        <img src="~assets/img/kuangsan.png" alt="">
       </div>
     <login-form></login-form>
     </div>
