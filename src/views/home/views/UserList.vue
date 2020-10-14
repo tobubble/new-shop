@@ -78,7 +78,12 @@
                 :enterable="false"
                 @clear="handleInputClear"
               >
-                <el-button size="mini" type="warning" icon="el-icon-setting">
+                <el-button
+                  @click="setRoleHandle(scope.row)"
+                  size="mini"
+                  type="warning"
+                  icon="el-icon-setting"
+                >
                 </el-button>
               </el-tooltip>
             </template>
@@ -157,6 +162,36 @@
             <el-button type="primary" @click="editClickHandle">确 定</el-button>
           </span>
         </el-dialog>
+        <!-- 分配角色的对话框 -->
+        <el-dialog
+          title="分配角色"
+          :visible.sync="setRoleDialogVisible"
+          width="50%"
+          @close="resetSetRoleDialog"
+        >
+          <div class="userNow roleNow">
+            当前的用户: {{ setRoleUser.username }}
+          </div>
+          <div class="roleNow">当前的用户: {{ setRoleUser.role_name }}</div>
+          <div class="roleNow">
+            分配新角色:
+            <el-select ref="setRoleDialog" v-model="selectedRoleId" placeholder="请选择">
+              <el-option
+                v-for="item in roleList"
+                :key="item.id"
+                :label="item.roleName"
+                :value="item.id"
+              >
+              </el-option>
+            </el-select>
+          </div>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="setRoleDialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="saveRoleInfo"
+              >确 定</el-button
+            >
+          </span>
+        </el-dialog>
       </el-form>
     </el-card>
   </div>
@@ -170,7 +205,8 @@ import { addUser } from "network/home/addUser";
 import { getUserInfo } from "network/home/getUserInfo";
 import { editUserInfo } from "network/home/editUserInfo";
 import { deletUser } from "network/home/deletUser";
-
+import { getRoleList } from "network/home/getRoleList";
+import { allotUserRole } from "network/home/allotUserRole";
 
 export default {
   props: {
@@ -255,6 +291,14 @@ export default {
           { validator: validateTelphone, trigger: "blur" },
         ],
       },
+      // 控制 分配角色对话框的显示
+      setRoleDialogVisible: false,
+      // 保存当前正在分配角色的用户 信息
+      setRoleUser: {},
+      // 所有的权限列表
+      roleList: [],
+      // 保存当前的选中的role id
+      selectedRoleId: '',
     };
   },
   mounted() {},
@@ -359,21 +403,58 @@ export default {
     },
     // 监听删除按钮的点击事件
     async deleteUserById(id) {
-     const res = await this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).catch(err => err)
+      const res = await this.$confirm(
+        "此操作将永久删除该用户, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      ).catch((err) => err);
       // 点击确认返回字符串 confirm
       // 点击确认返回字符串 cancel
-      if(res === "cancel") return this.$message("取消删除用户操作")
-      deletUser(id).then(res => {
-        if(res.data.meta.status !== 200) return false
+      if (res === "cancel") return this.$message("取消删除用户操作");
+      deletUser(id).then((res) => {
+        if (res.data.meta.status !== 200) return false;
         // 更新视图
+        this.getUserListData();
+        this.$message.success("删除用户成功");
+      });
+    },
+    // 监听分配角色按钮的点击
+    setRoleHandle(role) {
+      // 保存当前分配角色的信息
+      this.setRoleUser = role;
+      // 请求获取权限列表，并保存
+      getRoleList().then((res) => {
+        if (res.data.meta.status !== 200)
+          return this.$message.error("获取权限列表失败");
+        this.roleList = res.data.data;
+        // console.log(this.roleList);
+      });
+      // console.log(this.setRoleUser);
+      this.setRoleDialogVisible = true;
+    },
+    // 点击确定保存角色信息
+    saveRoleInfo() {
+      if(!this.selectedRoleId) return this.$message.error("请选择分配的角色")
+      // console.log(this.setRoleUser.id, this.selectedRoleId)
+      allotUserRole(this.setRoleUser.id, this.selectedRoleId).then(res => {
+        // console.log(res)
+        if(res.data.meta.status !== 200) return this.$message.error("分配角色失败")
+        this.$message.success("分配角色成功")
         this.getUserListData()
-        this.$message.success("删除用户成功")
+        this.setRoleDialogVisible = false
       })
+    },
+    // 重置对话框
+    resetSetRoleDialog() {
+      // 当对话框重置的时候，将数据个体重置
+      this.selectedRoleId = ''
+      // this.setRoleUser = {}
     }
+
   },
 };
 </script>
@@ -394,5 +475,9 @@ export default {
 
 .el-pagination {
   margin-top: 20px;
+}
+
+.roleNow {
+  margin-top: 8px;
 }
 </style>
