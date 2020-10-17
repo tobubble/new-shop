@@ -6,7 +6,8 @@ import "assets/css/base.css"
 import "./assets/fonts/iconfont.css"
 // import './plugins/element-ui'
 import {Form, Input, FormItem, Button, Message, Container, Header, Aside, Main, Menu, Submenu, MenuItem, Breadcrumb, BreadcrumbItem, Card
-,Table, TableColumn,Switch, Tooltip, Pagination, Dialog, Tag, Row, Col, Tree, Select, Option} from 'element-ui'
+,Table, TableColumn,Switch, Tooltip, Pagination, Dialog, Tag, Row, Col, Tree, Select, Option,
+cascader} from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 
 // 引入 element ui 的 messageBox 的 confoirm 全局组件
@@ -38,6 +39,7 @@ Vue.use(Col)
 Vue.use(Tree)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(cascader)
 
 
 Vue.config.productionTip = false
