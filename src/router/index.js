@@ -5,7 +5,7 @@ const Login = () => import('views/login/Login')
 
 const Home = () => import('views/home/Home')
 const CharacterList = () => import("views/home/views/CharacterList")
-const ClassifyList = () => import("views/home/views/ClassifyList")
+const ClassifyList = () => import("views/home/views/ClassifyParams")
 const DataReport = () => import("views/home/views/DataReport")
 const ItemClassify = () => import("views/home/views/ItemClassify")
 const ItemList = () => import("views/home/views/ItemList")
