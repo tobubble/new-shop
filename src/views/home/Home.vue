@@ -25,9 +25,10 @@ export default {
   methods: {
     getInitData() {
       getMenuData().then((data) => {
+        console.log(data)
         if (data.status !== 200) return this.$message.error(data.data.meta.msg);
         this.menuData = data.data;
-        // console.log(this.menuData);
+        console.log(this.menuData);
       });
     },
   },
@@ -39,7 +40,7 @@ export default {
 
 <style lang='less' scoped>
 #home {
-  height: 100vh;
+  height: 100vh; 
   display: flex;
   flex-direction: column;
 }

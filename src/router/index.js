@@ -13,6 +13,7 @@ const OrderList = () => import("views/home/views/OrderList")
 const RootList = () => import("views/home/views/RootList")
 const UserList = () => import("views/home/views/UserList")
 const Welcome = () => import("views/home/views/Welcome")
+const AddGoodsCpn = () => import("views/home/views/AddGoodsCpn")
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,7 @@ const routes = [
       {path: "/orderList", component: OrderList},
       {path: "/rootList", component: RootList},
       {path: "/userList", component: UserList},
+      {path: "/addGoodsCpn", component: AddGoodsCpn},
     ]
   }
 ]

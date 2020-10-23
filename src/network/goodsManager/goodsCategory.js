@@ -11,3 +11,11 @@ export function goodsCategory (config) {
     }
   })
 }
+
+// 获取所有的商品分类
+export function goodsCategory2 () {
+  return request({
+    url: 'categories',
+    method: 'get'
+  })
+}

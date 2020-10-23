@@ -122,8 +122,8 @@
           <template slot-scope="scope">
             <el-tag
               v-show="tag !== ''"
-              :key="tag"
-              v-for="tag in scope.row.attr_vals.split(',')"
+              :key="index"
+              v-for="(tag, index) in scope.row.attr_vals.split(',')"
               closable
               :disable-transitions="false"
               @close="handleClose(tag, scope.row)"

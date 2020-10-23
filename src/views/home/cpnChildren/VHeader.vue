@@ -24,6 +24,10 @@ export default {
 </script>
 
 <style lang='less' scoped>
+.el-container {
+  flex: 0;
+}
+
 .el-header {
   background-color: #363D40;
   color: #333;
@@ -31,6 +35,7 @@ export default {
   line-height: 60px;
   display: flex;
   justify-content: space-between;
+  margin: 0;
 
   > .header-left {
     display: flex;
