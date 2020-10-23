@@ -12,6 +12,11 @@ import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
 Vue.use(VueQuillEditor, /* { default global options } */)
 
+// 加入 echarts
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+
+
 // import './plugins/element-ui'
 import {
   Form, Input, FormItem, Button, Message, Container, Header, Aside, Main, Menu, Submenu, MenuItem, Breadcrumb, BreadcrumbItem, Card
