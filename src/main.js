@@ -16,7 +16,7 @@ Vue.use(VueQuillEditor, /* { default global options } */)
 import {
   Form, Input, FormItem, Button, Message, Container, Header, Aside, Main, Menu, Submenu, MenuItem, Breadcrumb, BreadcrumbItem, Card
   , Table, TableColumn, Switch, Tooltip, Pagination, Dialog, Tag, Row, Col, Tree, Select, Option,
-  cascader, Alert, Tabs, TabPane, Step, Steps, CheckboxGroup, Checkbox, 
+  cascader, Alert, Tabs, TabPane, Step, Steps, CheckboxGroup, Checkbox, Timeline, TimelineItem
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 
@@ -62,6 +62,8 @@ Vue.use(Steps)
 Vue.use(CheckboxGroup)
 Vue.use(Checkbox)
 Vue.use(Upload)
+Vue.use(Timeline)
+Vue.use(TimelineItem)
 
 
 Vue.config.productionTip = false

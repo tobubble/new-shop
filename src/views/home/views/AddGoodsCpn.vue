@@ -98,7 +98,7 @@
               :key="item.attr_id"
               :label="item.attr_name"
             >
-              <el-input :value="item.attr_vals[0]"></el-input>
+              <el-input v-model="item.attr_vals[0]"></el-input>
             </el-form-item>
           </el-tab-pane>
           <el-tab-pane label="商品图片">
@@ -323,7 +323,7 @@ export default {
         });
 
         // 请求添加商品
-        this.addGoodsPut()
+        this.addGoodsPut();
       });
     },
 
@@ -402,7 +402,7 @@ export default {
           attrs: [], // 商品的参数（数组），包含 `动态参数` 和 `静态属性`
         };
         // 返回基本信息(step返回第一步)
-        this.activeIndex = 0
+        this.activeIndex = 0;
       });
     },
   },
