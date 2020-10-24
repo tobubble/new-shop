@@ -1,5 +1,5 @@
 <template>
-  <div v-if="Object.keys(userListData).length !== 0">
+  <div>
     <!-- 面包屑 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item>首页</el-breadcrumb-item>
@@ -371,6 +371,7 @@ export default {
     },
     // 监听修改按钮的点击
     handleEditCLick(id) {
+      console.log('hello')
       getUserInfo(id).then((res) => {
         if (res.status != 200) return this.$message.error("获取用户信息失败");
         let data = res.data.data;
